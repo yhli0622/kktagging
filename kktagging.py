@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 KK MP3 Tagging Tool
+*使用前提為必需讓 KKBOX 下載的音樂無加密*
 
-使用前提為必需讓 KKBOX 下載的音樂無加密
-YHLi
+YHLi, Nov, 2011
 """
 
 import sqlite3, getopt, sys, os.path
@@ -18,16 +18,21 @@ except:
 
 def usage():
 	print """
-		-v verbose
-		-o output directory
-		-d sqlite database
-		-p plist file
-		-s system serial
+
+usage: kktagging.py [-odp] -s "你機器的序號"
+
+	-o output directory
+	-d sqlite database
+	-p plist file
+	-s system serial
 	"""
 	
 def main():
+	if len(sys.argv) < 2:
+		usage()
+		sys.exit(2)
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], "vo:d:p:")
+		opts, args = getopt.getopt(sys.argv[1:], "s:o:d:p:")
 	except getopt.GetoptError, err:
 		print str(err)
 		usage()
